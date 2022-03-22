@@ -2,8 +2,10 @@ const express = require('express')
 const morgan = require('morgan')
 const cors = require('cors')
 const app = express()
-const PORT = 3000
 
+require('./model')
+
+const PORT = 3000
 
 app.use(morgan('dev'))
 app.use(cors())
