@@ -1,5 +1,5 @@
 const { body } = require('express-validator')
-const { validate } = require('../middleware/validate')
+const validate = require('../middleware/validate')
 const { User } = require('../model')
 const md5 = require('../utils/md5')
 exports.register = validate([

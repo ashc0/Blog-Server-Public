@@ -12,10 +12,9 @@ module.exports = async (req, res, next) => {
   try {
     const { userId, updatedAt } = await verify(token, jwtSecret)
     const user = await User.findById(userId).select(['username', 'role', '_id', 'updatedAt'])
-    console.log(updatedAt , user.updatedAt)
     if (!user || updatedAt !== user.updatedAt) return res.status(401).json({
       error: {
-        msg: '尚未登录'
+        msg: '登录信息已过期'
       }
     })
     req.user = user

@@ -1,6 +1,6 @@
 const { validationResult } = require('express-validator')
 
-exports.validate = validations => async (req, res, next) => {
+module.exports = validations => async (req, res, next) => {
   for (let validation of validations) {
     const result = await validation.run(req);
     if (result.errors.length) break;

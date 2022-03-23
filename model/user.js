@@ -14,8 +14,7 @@ const userSchema = mongoose.Schema({
   },
   role: {
     type: String,
-    default: 'user',
-    set() { return 'user' }
+    default: 'user'
   }, 
   createdAt: {
     type: String,

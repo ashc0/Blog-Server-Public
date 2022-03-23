@@ -11,7 +11,7 @@ app.use(morgan('dev'))
 app.use(cors())
 app.use(express.json())
 //路由
-app.use(require('./router'))
+app.use('/api', require('./router'))
 
 // 错误处理
 app.use(require('./middleware/errorHandler'))
