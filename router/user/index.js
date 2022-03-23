@@ -12,6 +12,6 @@ router.post('/login', validator.login,loginHandler)
 
 router.put('/register', validator.register, registerHandler)
 
-router.put('/user/update', auth, updateUserHandler)
+router.put('/user/update', auth, validator.update, updateUserHandler)
 
 module.exports = router

@@ -4,17 +4,12 @@ const { jwtSecret } = require('../config/private')
 const md5 = require('../utils/md5')
 exports.loginHandler = async (req, res, next) => {
   try {
-    let user = await User.findOne(req.body.user).select(['password'])
-    if (!user || user.password !== md5(req.body.user.password)) return res.status(400).json({
-      error: {
-        msg: '用户名或密码错误'
-      }
-    })
-    req.user = user
     const token = await sign({
-      userId: user._id
+      userId: req.user._id,
+      // 防止修改密码后 token 依旧生效
+      updatedAt: req.user.updatedAt
     }, jwtSecret)
-    res.status(200).json({ ...user.toJSON(), token })
+    res.status(200).json({ ...req.user, token })
   } catch (err) {
     next(err)
   }
@@ -34,7 +29,15 @@ exports.registerHandler = async (req, res, next) => {
 
 exports.updateUserHandler = async (req, res, next) => {
   try {
-    const user = req.user
+
+    let user = req.user
+    // 这里不用 md5 加密，因为会自动加密
+    user.password = req.body.password.new
+    user.updatedAt = new Date().getTime()
+    await user.save()
+    user = user.toJSON()
+    delete user.password
+    delete user._id
     res.status(201).json({ user })
   } catch (err) {
     next(err)

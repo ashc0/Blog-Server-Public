@@ -9,6 +9,10 @@ const blogSchema = mongoose.Schema({
   description: {
     type: String,
     default: '但愿人长久'
+  },
+  updatedAt: {
+    type: Date,
+    default: Date.now
   }
 })
 

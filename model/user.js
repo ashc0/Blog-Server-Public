@@ -16,6 +16,14 @@ const userSchema = mongoose.Schema({
     type: String,
     default: 'user',
     set() { return 'user' }
+  }, 
+  createdAt: {
+    type: String,
+    default: new Date().getTime()
+  },
+  updatedAt: {
+    type: String,
+    default: new Date().getTime()
   }
 })
 
