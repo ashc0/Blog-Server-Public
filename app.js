@@ -16,6 +16,11 @@ app.use(require('./router'))
 // 错误处理
 app.use(require('./middleware/errorHandler'))
 
+app.get('/', (req, res) => {
+  res.header({
+    contentType: 'text/html'
+  }).end('<h1 style="text-align:center;color:red">Hello</h1>')
+})
 app.listen(PORT, () => {
   console.log(`listening on port ${PORT}`)
 })
