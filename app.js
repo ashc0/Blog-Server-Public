@@ -10,15 +10,11 @@ const PORT = 3000
 app.use(morgan('dev'))
 app.use(cors())
 app.use(express.json())
+//路由
+app.use(require('./router'))
 
-app.get('/',() => {
-  console.log('/ get')
-})
-
-app.post('/',(req, res) => {
-  console.log('/ post')
-  res.status(200).json(req.body)
-})
+// 错误处理
+app.use(require('./middleware/errorHandler'))
 
 app.listen(PORT, () => {
   console.log(`listening on port ${PORT}`)

@@ -1,4 +1,4 @@
 /node_modules
 /summary.md
 package-lock.json
-/config/db.js
+/config/private.js
