@@ -15,7 +15,7 @@ exports.login = validate([
   body('user.username').notEmpty().withMessage('用户名不能为空'),
   body('user.password').notEmpty().withMessage('密码不能为空'),
   body('user.password').custom(async (password, { req }) => {
-    let user = await User.findOne(req.body.user).select(['password', 'updatedAt', 'username'])
+    let user = await User.findOne(req.body.user).select(['password', 'updatedAt', 'username', 'role'])
     if (!user || user.password !== md5(password)) throw '用户名或密码错误'
     req.user = user.toJSON()
     delete req.user.password
