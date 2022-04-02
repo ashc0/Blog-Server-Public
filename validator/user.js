@@ -15,10 +15,9 @@ exports.login = validate([
   body('user.username').notEmpty().withMessage('用户名不能为空'),
   body('user.password').notEmpty().withMessage('密码不能为空'),
   body('user.password').custom(async (password, { req }) => {
-    let user = await User.findOne(req.body.user).select(['password', 'updatedAt', 'username', 'role'])
+    let user = await User.findOne(req.body.user).select(['updatedAt'])
     if (!user || user.password !== md5(password)) throw '用户名或密码错误'
     req.user = user.toJSON()
-    delete req.user.password
   })
 ])
 
@@ -26,7 +25,6 @@ exports.update = validate([
   body('password.old').notEmpty().withMessage('新密码不能为空'),
   body('password.new').notEmpty().withMessage('旧密码不能为空'),
   body('password.old').custom(async (password, { req }) => {
-    console.log(md5(123321))
     if (password === req.body.password.new) throw '新旧密码不能相同'
     const user = await User.findById(req.user._id).select(['password', 'username'])
     if (user.password !== md5(req.body.password.old)) throw '原密码错误'

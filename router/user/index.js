@@ -1,5 +1,6 @@
 const { Router } = require('express')
 const {
+  userHandler,
   loginHandler,
   registerHandler,
   updateUserHandler
@@ -8,7 +9,9 @@ const auth = require('../../middleware/auth')
 const validator = require('../../validator/user')
 const router = Router()
 
-router.post('/login', validator.login,loginHandler)
+router.get('/user', auth, userHandler)
+
+router.post('/login', validator.login, loginHandler)
 
 router.put('/register', validator.register, registerHandler)
 

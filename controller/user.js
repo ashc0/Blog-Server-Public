@@ -2,6 +2,11 @@ const { User } = require('../model')
 const { sign, verify } = require('../utils/jwt')
 const { jwtSecret } = require('../config/private')
 const md5 = require('../utils/md5')
+
+exports.userHandler = (req, res, next) => {
+  res.status(200).json(req.user.toJSON())
+}
+
 exports.loginHandler = async (req, res, next) => {
   try {
     const token = await sign({
@@ -9,7 +14,7 @@ exports.loginHandler = async (req, res, next) => {
       // 防止修改密码后 token 依旧生效
       updatedAt: req.user.updatedAt
     }, jwtSecret)
-    res.status(200).json({ ...req.user, token })
+    res.status(200).json({ token })
   } catch (err) {
     next(err)
   }
