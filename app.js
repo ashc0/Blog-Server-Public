@@ -2,7 +2,8 @@ const express = require('express')
 const morgan = require('morgan')
 const cors = require('cors')
 const app = express()
-
+const multipart = require('connect-multiparty');
+require('./storage/redis')
 require('./model')
 
 const PORT = 3000
@@ -10,6 +11,8 @@ const PORT = 3000
 app.use(morgan('combined'))
 app.use(cors())
 app.use(express.json())
+
+app.use(multipart())
 //路由
 app.use('/api', require('./router'))
 
