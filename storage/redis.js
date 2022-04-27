@@ -1,13 +1,13 @@
 const redis = require("redis");
 const { promisify } = require('util')
 /**以下参数分别填写您的 Redis 实例内网 IP、端口号、实例 ID 和密码*/
-var host = "sh-crs-hply4tzd.sql.tencentcdb.com",
-    port = "27452",
-    instanceid = "crs-hply4tzd",
-    pwd = "lovelu1314";
+var instanceid = "crs-hply4tzd",
+    pwd = "lovelu1314",
+    host = "sh-crs-hply4tzd.sql.tencentcdb.com",
+    port = "27452";
+    // host = "10.0.0.10",
+    // port = 6379;
 
-// host = "10.0.0.10"
-// port = 6379
 //连接 Redis
 var client = redis.createClient(port, host, { detect_buffers: true });
 client.on("connect", () => {
@@ -16,7 +16,7 @@ client.on("connect", () => {
 
 // Redis 连接错误
 client.on("error", function (error) {
-    console.log(error);
+    console.log('error', error);
 });
 //鉴权
 client.auth(instanceid + ":" + pwd);
@@ -43,15 +43,11 @@ client.auth(instanceid + ":" + pwd);
 // //程序结束关闭客户端
 //     client.end();
 // });
-client.exists("redis", (err, res) => {
-    if(err) throw err
-    if(res) console.log('存在')
-    else console.log('不存在')
-})
+// client.exists("redis", (err, res) => {
+//     if(err) throw 1
+//     if(res) console.log('存在')
+//     else console.log('不存在')
+// })
 
-module.exports = {
-    redisSet: promisify(client.set),
-    redisGet: promisify(client.get),
-    redisDelete: promisify(client.del),
-    redisExists: promisify(client.exists)
-}
+
+module.exports = client

@@ -8,5 +8,6 @@ mongoose.connect(dbUri).then(() => {
 
 module.exports = {
   User: mongoose.model('User', require('./user')),
-  Blog: mongoose.model('Blog', require('./blog'))
+  Blog: mongoose.model('Blog', require('./blog')),
+  Article: mongoose.model('Article', require('./article'))
 }

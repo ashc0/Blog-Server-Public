@@ -23,6 +23,11 @@ const userSchema = mongoose.Schema({
   updatedAt: {
     type: String,
     default: new Date().getTime()
+  },
+  avatar: {
+    type: String,
+    default: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRbALKepLgyEfJIYhnwrb0hNBEcXdTmZrMobw&usqp=CAU',
+    select: true
   }
 })
 
