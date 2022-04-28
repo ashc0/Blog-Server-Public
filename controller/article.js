@@ -4,7 +4,7 @@ const client = require('../storage/redis')
 exports.image = async (req, res, next) => {
   try {
     const { size, path, name } = req.files['wangeditor-uploaded-image']
-    const filename = name.split('.')[0] + new Date().valueOf()
+    const filename = name.split('.')[0] + ''
     let url = await uploadImage(filename, path, size)
     res.status(200).json({ errno: 0, data: { url } })
   } catch (err) {
