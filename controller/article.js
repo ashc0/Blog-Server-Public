@@ -63,7 +63,7 @@ exports.getArticle = async (req, res, next) => {
       .sort({
         updatedAt: -1 // -1 倒序 1 正序
       }).select(['title', '_id', 'description', 'author', 'cover', 'updatedAt', 'tagList']),
-      Article.countDocuments()
+    Article.countDocuments()
     ])
     if (articles.length === 0) return res.status(200).json({
       data: { articles: [], articleCount }
@@ -71,6 +71,23 @@ exports.getArticle = async (req, res, next) => {
     // 首次搜索
     if (req.query.first) client.setex('firstList', 3600 * 24, JSON.stringify({ articles, articleCount }))
     res.status(201).json({ articles, articleCount })
+  } catch (error) {
+    next(error)
+  }
+}
+
+exports.updateArticle = async (req, res, next) => {
+  try {
+    client.del('firstList')
+    client.del(req.body.article._id)
+    let article = req.article
+    delete req.body.article._id
+    req.body.article.updatedAt = String(Date.now())
+    Object.assign(article, req.body.article)
+    await article.save()
+    article.toJSON()
+
+    res.status(200).json({ article })
   } catch (error) {
     next(error)
   }
